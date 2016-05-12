@@ -159,6 +159,16 @@ func Start(bot Bot) (chan bool, chan bool) {
 	} else {
 		host := fmt.Sprintf("https://%s/bot%s", bot.Host, bot.Token)
 		log.Printf("Setting webhook %s\n", host)
+
+		lejson := fmt.Sprintf("{\"url\":\"%s\"}", host)
+		resp, err := http.Post(fmt.Sprintf("%s/setWebhook", telegram_api), "application/json", bytes.NewBufferString(lejson))
+		if err != nil {
+			panic(err)
+		}
+		contents, _ := ioutil.ReadAll(resp.Body)
+		log.Println(string(contents))
+		log.Println("Webhook set")
+
 		go func(in chan<- Update) {
 			http.HandleFunc(fmt.Sprintf("/bot%s", bot.Token), receiver(in))
 			log.Fatal(http.ListenAndServe(":8080", nil))
