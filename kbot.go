@@ -157,7 +157,10 @@ func Start(bot Bot) (chan bool, chan bool) {
 			done <- true
 		}(in)
 	} else {
-		host := fmt.Sprintf("https://%s/bot%s", bot.Host, bot.Token)
+		if bot.Port == "" {
+			bot.Port = "8080"
+		}
+		host := fmt.Sprintf("https://%s:%s/bot%s", bot.Host, bot.Port, bot.Token)
 		log.Printf("Setting webhook %s\n", host)
 
 		lejson := fmt.Sprintf("{\"url\":\"%s\"}", host)
@@ -171,7 +174,7 @@ func Start(bot Bot) (chan bool, chan bool) {
 
 		go func(in chan<- Update) {
 			http.HandleFunc(fmt.Sprintf("/bot%s", bot.Token), receiver(in))
-			log.Fatal(http.ListenAndServe(":8080", nil))
+			log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", bot.Port), nil))
 		}(in)
 	}
 
