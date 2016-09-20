@@ -1,6 +1,6 @@
 # kbot
 
-Yet another [telegram bot]() lib in golang.
+Yet another [telegram bot](https://core.telegram.org/bots/api) lib in golang.
 
 *Work in progress*
 
@@ -37,7 +37,9 @@ If "Host" is defined at the bot, it will start a server at Port and setup the te
 
 You can take a look at types.go to understand what you will receive and what you can send.
 
-Please be aware that webhooks only work over https, so you will need a proxy in front of your bot, such as [Caddy](http://caddyserver.com).
+Please be aware that webhooks only work over https, so you will need a proxy in front of your bot, such as [Caddy](https://caddyserver.com).
+
+See a complete example of a [Barcode generator bot](https://github.com/diogok/barcodebot).
 
 ## License
 
