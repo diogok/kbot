@@ -158,9 +158,9 @@ func Start(bot Bot) (chan bool, chan bool) {
 		}(in)
 	} else {
 		if bot.Port == "" {
-			bot.Port = "8080"
+			bot.Port = "80"
 		}
-		host := fmt.Sprintf("https://%s:%s/bot%s", bot.Host, bot.Port, bot.Token)
+		host := fmt.Sprintf("https://%s/bot%s", bot.Host, bot.Token)
 		log.Printf("Setting webhook %s\n", host)
 
 		lejson := fmt.Sprintf("{\"url\":\"%s\"}", host)
